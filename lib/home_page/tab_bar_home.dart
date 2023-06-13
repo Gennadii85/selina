@@ -27,8 +27,8 @@ class _TabBarHomeState extends State<TabBarHome> {
         data: NavigationBarThemeData(
             labelTextStyle: MaterialStateProperty.all(
                 const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
-            backgroundColor: Colors.amber.shade100,
-            indicatorColor: Colors.pink.shade100),
+            backgroundColor: Colors.amber.shade50,
+            indicatorColor: Colors.pink.shade50),
         child: NavigationBar(
           selectedIndex: index,
           onDestinationSelected: (index) => setState(() => this.index = index),

@@ -19,15 +19,15 @@ class _ModelCategoriesState extends State<ModelCategories> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(),
+        // appBar: AppBar(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GridView.builder(
             itemCount: product.length,
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 180,
-              crossAxisSpacing: 15,
-              mainAxisSpacing: 15,
+              crossAxisSpacing: 3,
+              mainAxisSpacing: 3,
             ),
             padding: const EdgeInsets.all(15),
             itemBuilder: (BuildContext context, int index) => Card(
@@ -61,8 +61,11 @@ class _ModelCategoriesState extends State<ModelCategories> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                          Text(
-                            money[index].toString(), //цена
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            child: Text(
+                              '${money[index].toString()} грн', //цена
+                            ),
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -70,6 +73,7 @@ class _ModelCategoriesState extends State<ModelCategories> {
                             child: const Text('у кошик'),
                             onPressed: () {
                               const snackBar = SnackBar(
+                                duration: Duration(seconds: 1),
                                 content: Text('гарний вибір'),
                               );
                               ScaffoldMessenger.of(context)
@@ -77,11 +81,11 @@ class _ModelCategoriesState extends State<ModelCategories> {
                             },
                           )
                         ])),
-                    Expanded(
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [Text('додатковий текст-опис')]),
-                    ),
+                    // Expanded(
+                    //   child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: const [Text('додатковий текст-опис')]),
+                    // ),
                   ],
                 ),
               ),

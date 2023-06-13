@@ -16,7 +16,7 @@ class MonetizationPage extends StatefulWidget {
 class _MonetizationPageState extends State<MonetizationPage> {
   List<String> productId = DateBase().productId;
   List<num> productMoney = DateBase().productMoney;
-  List<int> counter = List.generate(DateBase().productId.length, (index) => 1);
+  List<int> counter = List.generate(DateBase().productId.length, (index) => 0);
 
   Future _openBox() async {
     await Hive.openBox('user');
@@ -69,12 +69,17 @@ class _MonetizationPageState extends State<MonetizationPage> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  const Expanded(
+                    flex: 3,
+                    child: Text(
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        'Выбранно позиций '),
+                  ),
                   Expanded(
-                    flex: 2,
                     child: Text(
                         style:
-                            const TextStyle(fontSize: 16, color: Colors.black),
-                        'Выбранно позиций ${productId.length}'),
+                            const TextStyle(fontSize: 14, color: Colors.black),
+                        '${productId.length}'),
                   ),
                 ],
               ),
@@ -90,7 +95,7 @@ class _MonetizationPageState extends State<MonetizationPage> {
                   Expanded(
                     child: Text(
                         style:
-                            const TextStyle(fontSize: 16, color: Colors.black),
+                            const TextStyle(fontSize: 14, color: Colors.black),
                         '${productMoney.reduce((value, element) => value + element)} грн.'),
                   ),
                 ],
@@ -102,7 +107,7 @@ class _MonetizationPageState extends State<MonetizationPage> {
               padding: const EdgeInsets.all(10.0),
               child: TextButton(
                 style: TextButton.styleFrom(
-                    backgroundColor: Colors.pink.shade100,
+                    backgroundColor: Colors.pink.shade50,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15))),
                 onPressed: () {
@@ -119,12 +124,14 @@ class _MonetizationPageState extends State<MonetizationPage> {
         body: ListView.builder(
           itemCount: productId.length,
           itemBuilder: (context, index) => Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             elevation: 6,
             color: Colors.amber.shade100,
             semanticContainer: true,
             child: InkResponse(
+              borderRadius: BorderRadius.circular(50),
               containedInkWell: true,
-              highlightShape: BoxShape.rectangle,
               child: Row(
                 children: [
                   Expanded(
@@ -146,36 +153,37 @@ class _MonetizationPageState extends State<MonetizationPage> {
                         ]),
                   ),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.pink[100]),
-                          icon: const Icon(Icons.remove_circle_outline),
-                          onPressed: () {
-                            if (counter[index] > 1) {
-                              int cas = counter[index];
-                              cas = cas - 1;
-                              counter.removeAt(index);
-                              counter.insert(index, cas);
-                              setState(() {});
-                            } else {}
-                          },
-                        ),
-                        Text(counter[index].toString()),
-                        IconButton(
-                          // style: ElevatedButton.styleFrom(
-                          //     backgroundColor: Colors.pink[100]),
-                          icon: const Icon(Icons.add_circle_outline),
-                          onPressed: () {
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.pink[100]),
+                        icon: const Icon(Icons.remove_circle_outline),
+                        onPressed: () {
+                          if (counter[index] > 0) {
                             int cas = counter[index];
-                            cas = cas + 1;
+                            cas = cas - 1;
                             counter.removeAt(index);
                             counter.insert(index, cas);
                             setState(() {});
-                          },
-                        )
-                      ]),
+                          } else {}
+                        },
+                      ),
+                      Text(counter[index].toString()),
+                      IconButton(
+                        // style: ElevatedButton.styleFrom(
+                        //     backgroundColor: Colors.pink[100]),
+                        icon: const Icon(Icons.add_circle_outline),
+                        onPressed: () {
+                          int cas = counter[index];
+                          cas = cas + 1;
+                          counter.removeAt(index);
+                          counter.insert(index, cas);
+                          setState(() {});
+                        },
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),

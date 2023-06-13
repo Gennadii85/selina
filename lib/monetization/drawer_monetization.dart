@@ -36,6 +36,15 @@ class _DrawerMonetizationState extends State<DrawerMonetization> {
               title: const Text('Коментарии', style: TextStyle(fontSize: 22)),
               onTap: (() {}),
             ),
+            ListTile(
+              title: const Text(
+                'Выйти из акаунта',
+                style: TextStyle(fontSize: 22),
+              ),
+              onTap: (() {
+                Hive.box('user').clear();
+              }),
+            ),
             const Divider(
               height: 50,
               thickness: 1,
@@ -43,12 +52,10 @@ class _DrawerMonetizationState extends State<DrawerMonetization> {
             ),
             ListTile(
               title: const Text(
-                'Скидка удалить регистраию',
+                'Скидка',
                 style: TextStyle(fontSize: 22),
               ),
-              onTap: (() {
-                Hive.box('user').clear();
-              }),
+              onTap: (() {}),
             ),
             const Spacer(),
             const Text('+38 097 770 9957'),

@@ -20,15 +20,52 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       home: Scaffold(
         drawer: const DrawerShoppingCart(),
         appBar: AppBar(
-            centerTitle: true,
-            title: Column(children: [
-              Text('Выбранно позиций ${productId.length}'),
-              Text(
-                  'На общую сумму ${productMoney.reduce((value, element) => value + element)} грн.')
-            ])),
+          centerTitle: false,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Expanded(
+                    flex: 3,
+                    child: Text(
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        'Выбранно позиций '),
+                  ),
+                  Expanded(
+                    child: Text(
+                        style:
+                            const TextStyle(fontSize: 14, color: Colors.black),
+                        '${productId.length}'),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Expanded(
+                    flex: 3,
+                    child: Text(
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        'На общую сумму '),
+                  ),
+                  Expanded(
+                    child: Text(
+                        style:
+                            const TextStyle(fontSize: 14, color: Colors.black),
+                        '${productMoney.reduce((value, element) => value + element)} грн.'),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
         body: ListView.builder(
           itemCount: productId.length,
           itemBuilder: (context, index) => Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             elevation: 6,
             color: Colors.amber.shade100,
             semanticContainer: true,
