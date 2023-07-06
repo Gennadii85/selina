@@ -24,17 +24,22 @@ class Categories extends StatelessWidget {
         highlightShape: BoxShape.rectangle,
         child: Column(
           children: [
-            Ink.image(
-              width: double.infinity,
-              height: 240,
-              fit: BoxFit.cover,
-              image: AssetImage(image),
+            Expanded(
+              flex: 4,
+              child: Ink.image(
+                width: double.infinity,
+                height: 240,
+                fit: BoxFit.cover,
+                image: AssetImage(image),
+              ),
             ),
-            Text(
-              name,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Expanded(
+              child: Text(
+                name,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
-            const SizedBox(height: 10)
           ],
         ),
       ),

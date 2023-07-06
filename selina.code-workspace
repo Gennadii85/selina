@@ -3,5 +3,10 @@
         {
             "path": "."
         }
-    ]
+    ],
+    "settings": {
+        "dataworkspace.excludedProjects": [
+            "seloiaazure/seloiaazure.sqlproj"
+        ]
+    }
 }
