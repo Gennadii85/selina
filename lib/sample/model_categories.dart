@@ -2,13 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:selina/date_base/connect.dart';
 
-import 'package:selina/date_base/date_base.dart';
-
 // шаблон распределения элементов в КАТЕГОРИЯХ
 
 class ModelCategories extends StatefulWidget {
-  var model;
-  ModelCategories({Key? key, required this.model}) : super(key: key);
+  const ModelCategories({Key? key}) : super(key: key);
 
   @override
   State<ModelCategories> createState() => _ModelCategoriesState();
@@ -22,10 +19,8 @@ class _ModelCategoriesState extends State<ModelCategories> {
   }
 
   var product = MySql();
-  // List<num> money = DateBase().productMoney;
   @override
   Widget build(BuildContext context) {
-    print(product.categories_name);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -87,7 +82,7 @@ class _ModelCategoriesState extends State<ModelCategories> {
                                   padding:
                                       const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                   child: Text(
-                                    '${product.goods[index]} грн', //цена
+                                    product.goods[index], //цена
                                   ),
                                 ),
                                 ElevatedButton(

@@ -10,17 +10,23 @@ class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
 
   @override
-  State<CategoriesPage> createState() => _CategoriesPageState();
+  State<CategoriesPage> createState() => CategoriesPageState();
 }
 
-class _CategoriesPageState extends State<CategoriesPage> {
-  // List<String> categories_name = MySql().categories_name;
-  var date_categories_name = MySql();
-
+class CategoriesPageState extends State<CategoriesPage> {
+  var date_categories = MySql();
   @override
   void initState() {
+    date_categories.getCategoriesID();
+    date_categories.getCategoriesName();
     super.initState();
-    date_categories_name.getConnection();
+  }
+
+  int id_categories = 124;
+  pushID(idd) {
+    id_categories = idd;
+    // print(id_categories);
+    return id_categories;
   }
 
   @override
@@ -28,14 +34,20 @@ class _CategoriesPageState extends State<CategoriesPage> {
     return Scaffold(
       drawer: const DrawerAppBar(),
       appBar: AppBar(
-        title: const Text('Selina'),
+        title: Text(id_categories.toString()),
       ),
       body: FutureBuilder(
-          future: date_categories_name.getConnection(),
+          future: date_categories.getCategoriesName(),
           builder: (context, snapshot) {
+            List<String> name = [];
+            List<int> idd = [];
+            name = date_categories.categories_name;
+            idd = date_categories.categories_id;
             if (snapshot.hasData) {
+              // print(id);
+              // print(name);
               return GridView.builder(
-                itemCount: date_categories_name.categories_name.length,
+                itemCount: name.length,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 300,
                   crossAxisSpacing: 3,
@@ -44,12 +56,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 padding: const EdgeInsets.all(5),
                 itemBuilder: (BuildContext context, int index) => Categories(
                   image: 'assets/podveski.png',
-                  name: date_categories_name.categories_name[index].toString(),
-                  coolbackCategories: () {
+                  name: name[index].toString(),
+                  id: idd[index],
+                  coolbackCategories: (idd) {
+                    // print(idd);
+                    pushID(idd);
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ModelCategories(
-                              model: MySql().getGoods(),
-                            )));
+                        builder: (context) => const ModelCategories()));
                   },
                 ),
               );

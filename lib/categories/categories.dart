@@ -1,15 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class Categories extends StatelessWidget {
   final String image;
   final String name;
   final Function coolbackCategories;
+  final int id;
 
   const Categories({
     Key? key,
+    required this.image,
     required this.name,
     required this.coolbackCategories,
-    required this.image,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -19,7 +22,7 @@ class Categories extends StatelessWidget {
       color: Colors.amber.shade100,
       semanticContainer: true,
       child: InkResponse(
-        onTap: () => coolbackCategories(),
+        onTap: () => coolbackCategories(id),
         containedInkWell: true,
         highlightShape: BoxShape.rectangle,
         child: Column(
