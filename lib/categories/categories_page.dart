@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../date_base/connect.dart';
 import '../home_page/drawer_home_page.dart';
 import '../sample/model_categories.dart';
+import '../date_base/categories_date.dart';
 import 'categories.dart';
 
 class CategoriesPage extends StatefulWidget {
@@ -15,20 +15,10 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class CategoriesPageState extends State<CategoriesPage> {
-  var date = MySql();
-
-  // @override
-  // void initState() {
-  //   date_categories.getCategoriesID();
-  //   date_categories.getCategoriesName();
-  //   super.initState();
-  // }
-
-  Future shared(idd) async {
+  Future shared(id) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('id_categories');
-    await prefs.setInt('id_categories', idd);
-    // return idd;
+    await prefs.setInt('id_categories', id);
   }
 
   @override
@@ -38,17 +28,12 @@ class CategoriesPageState extends State<CategoriesPage> {
       appBar: AppBar(
         title: const Text('Selina'),
       ),
-      body: FutureBuilder(
-          future:
-              Future.wait([date.getCategoriesName(), date.getCategoriesID()]),
+      body: FutureBuilder<List<CategoriesDate>>(
+          future: CategoriesDate.getCategories(),
           builder: (context, snapshot) {
-            List<String> name = [];
-            List<int> idd = [];
-            name = date.categories_name;
-            idd = date.categories_id;
             if (snapshot.hasData) {
               return GridView.builder(
-                itemCount: name.length,
+                itemCount: snapshot.data!.length,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 300,
                   crossAxisSpacing: 3,
@@ -56,11 +41,11 @@ class CategoriesPageState extends State<CategoriesPage> {
                 ),
                 padding: const EdgeInsets.all(5),
                 itemBuilder: (BuildContext context, int index) => Categories(
-                  image: 'assets/podveski.png',
-                  name: name[index].toString(),
-                  id: idd[index],
-                  coolbackCategories: (idd) {
-                    shared(idd);
+                  image: snapshot.data![index].cat_icon,
+                  name: snapshot.data![index].cat_name.toString(),
+                  id: snapshot.data![index].cat_id,
+                  coolbackCategories: (id) {
+                    shared(id);
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ModelCategories()));
                   },

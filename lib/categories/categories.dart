@@ -33,7 +33,7 @@ class Categories extends StatelessWidget {
                 width: double.infinity,
                 height: 240,
                 fit: BoxFit.cover,
-                image: AssetImage(image),
+                image: NetworkImage(image),
               ),
             ),
             Expanded(
