@@ -15,13 +15,14 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class CategoriesPageState extends State<CategoriesPage> {
-  var date_categories = MySql();
-  @override
-  void initState() {
-    date_categories.getCategoriesID();
-    date_categories.getCategoriesName();
-    super.initState();
-  }
+  var date = MySql();
+
+  // @override
+  // void initState() {
+  //   date_categories.getCategoriesID();
+  //   date_categories.getCategoriesName();
+  //   super.initState();
+  // }
 
   Future shared(idd) async {
     final prefs = await SharedPreferences.getInstance();
@@ -38,12 +39,13 @@ class CategoriesPageState extends State<CategoriesPage> {
         title: const Text('Selina'),
       ),
       body: FutureBuilder(
-          future: date_categories.getCategoriesName(),
+          future:
+              Future.wait([date.getCategoriesName(), date.getCategoriesID()]),
           builder: (context, snapshot) {
             List<String> name = [];
             List<int> idd = [];
-            name = date_categories.categories_name;
-            idd = date_categories.categories_id;
+            name = date.categories_name;
+            idd = date.categories_id;
             if (snapshot.hasData) {
               return GridView.builder(
                 itemCount: name.length,

@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:selina/date_base/connect.dart';
 
@@ -12,13 +12,14 @@ class ModelCategories extends StatefulWidget {
 }
 
 class _ModelCategoriesState extends State<ModelCategories> {
-  @override
-  void initState() {
-    super.initState();
-    product.getGoods();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   MySql().getGoods();
+  // }
 
-  var product = MySql();
+  // var product = MySql().goods;
+  var date = MySql();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,13 +33,19 @@ class _ModelCategoriesState extends State<ModelCategories> {
           ),
         ),
         body: FutureBuilder(
-          future: MySql().getGoods(),
+          future: Future.wait([date.getGoodsPrice(), date.getGoodsCode()]),
           builder: (context, snapshot) {
+            List<dynamic> code = [];
+            List<dynamic> price = [];
+            price = date.goods_price;
+            code = date.goods_code;
+            // print(code);
             if (snapshot.hasData) {
+              // print(code);
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
-                  itemCount: product.goods.length,
+                  itemCount: code.length,
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 240,
                     crossAxisSpacing: 3,
@@ -68,8 +75,7 @@ class _ModelCategoriesState extends State<ModelCategories> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    product
-                                        .goods[index], //наименование - артикул
+                                    code[index], //наименование - артикул
                                   )
                                 ]),
                           ),
@@ -82,7 +88,7 @@ class _ModelCategoriesState extends State<ModelCategories> {
                                   padding:
                                       const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                   child: Text(
-                                    product.goods[index], //цена
+                                    price[index], //цена
                                   ),
                                 ),
                                 ElevatedButton(
