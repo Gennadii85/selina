@@ -69,4 +69,18 @@ class MySql {
 
     return goods_code;
   }
+
+  List<dynamic> goods_photo = [];
+
+  Future getGoodsPhoto() async {
+    final connection = await sqlConnect;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('id_categories');
+    var results = await connection
+        .query('SELECT  photo FROM goods WHERE  category_id = $id');
+    goods_photo = results.map((e) => e.values!.first.toString()).toList();
+    // print(goods);
+
+    return goods_photo;
+  }
 }

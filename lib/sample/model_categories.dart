@@ -33,12 +33,19 @@ class _ModelCategoriesState extends State<ModelCategories> {
           ),
         ),
         body: FutureBuilder(
-          future: Future.wait([date.getGoodsPrice(), date.getGoodsCode()]),
+          future: Future.wait([
+            date.getGoodsPrice(),
+            date.getGoodsCode(),
+            date.getGoodsPhoto()
+          ]),
           builder: (context, snapshot) {
             List<dynamic> code = [];
             List<dynamic> price = [];
+            List<dynamic> photo = [];
+
             price = date.goods_price;
             code = date.goods_code;
+            photo = date.goods_photo;
             // print(code);
             if (snapshot.hasData) {
               // print(code);
@@ -67,7 +74,8 @@ class _ModelCategoriesState extends State<ModelCategories> {
                               width: double.infinity,
                               height: 240,
                               fit: BoxFit.cover,
-                              image: const AssetImage('assets/podveski.png'),
+                              image: NetworkImage('${photo[index]}'),
+                              // ('${photo[index]}'),
                             ),
                           ),
                           Expanded(
