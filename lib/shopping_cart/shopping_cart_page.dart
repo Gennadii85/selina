@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../date_base/date_goods.dart';
+import '../date_base/goods_date.dart';
 import 'drawer_shopping_cart.dart';
 
 class ShoppingCartPage extends StatefulWidget {

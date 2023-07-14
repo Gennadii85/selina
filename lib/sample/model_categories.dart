@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:selina/date_base/connect.dart';
 
+import '../date_base/goods_date.dart';
+
 // шаблон распределения элементов в КАТЕГОРИЯХ
 
 class ModelCategories extends StatefulWidget {
@@ -12,13 +14,6 @@ class ModelCategories extends StatefulWidget {
 }
 
 class _ModelCategoriesState extends State<ModelCategories> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   MySql().getGoods();
-  // }
-
-  // var product = MySql().goods;
   var date = MySql();
   @override
   Widget build(BuildContext context) {
@@ -33,26 +28,13 @@ class _ModelCategoriesState extends State<ModelCategories> {
           ),
         ),
         body: FutureBuilder(
-          future: Future.wait([
-            date.getGoodsPrice(),
-            date.getGoodsCode(),
-            date.getGoodsPhoto()
-          ]),
+          future: GoodsDate.getGoods(),
           builder: (context, snapshot) {
-            List<dynamic> code = [];
-            List<dynamic> price = [];
-            List<dynamic> photo = [];
-
-            price = date.goods_price;
-            code = date.goods_code;
-            photo = date.goods_photo;
-            // print(code);
             if (snapshot.hasData) {
-              // print(code);
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
-                  itemCount: code.length,
+                  itemCount: snapshot.data!.length,
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 240,
                     crossAxisSpacing: 3,
@@ -74,8 +56,8 @@ class _ModelCategoriesState extends State<ModelCategories> {
                               width: double.infinity,
                               height: 240,
                               fit: BoxFit.cover,
-                              image: NetworkImage('${photo[index]}'),
-                              // ('${photo[index]}'),
+                              image: NetworkImage(snapshot
+                                  .data![index].goods_photo), //фото товара
                             ),
                           ),
                           Expanded(
@@ -83,7 +65,8 @@ class _ModelCategoriesState extends State<ModelCategories> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    code[index], //наименование - артикул
+                                    snapshot.data![index]
+                                        .goods_code, //наименование - артикул
                                   )
                                 ]),
                           ),
@@ -96,7 +79,7 @@ class _ModelCategoriesState extends State<ModelCategories> {
                                   padding:
                                       const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                   child: Text(
-                                    price[index], //цена
+                                    '${snapshot.data![index].goods_price} грн', //цена
                                   ),
                                 ),
                                 ElevatedButton(

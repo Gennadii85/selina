@@ -2,8 +2,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:mysql1/mysql1.dart';
-import 'package:selina/date_base/categories_date.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MySql {
   var sqlConnect = MySqlConnection.connect(ConnectionSettings(
@@ -13,45 +11,45 @@ class MySql {
       password: 'Si1en_TanTa3',
       db: 'graf_selina'));
 
-  List<dynamic> goods_price = [];
+  // List<dynamic> goods_price = [];
 
-  Future getGoodsPrice() async {
-    final connection = await sqlConnect;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final int? id = prefs.getInt('id_categories');
-    var results = await connection
-        .query('SELECT price FROM goods WHERE  category_id = $id');
-    goods_price = results.map((e) => e.values!.first.toString()).toList();
-    // print(goods);
+  // Future getGoodsPrice() async {
+  //   final connection = await sqlConnect;
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final int? id = prefs.getInt('id_categories');
+  //   var results = await connection
+  //       .query('SELECT price FROM goods WHERE  category_id = $id');
+  //   goods_price = results.map((e) => e.values!.first.toString()).toList();
+  //   // print(goods);
 
-    return goods_price;
-  }
+  //   return goods_price;
+  // }
 
-  List<dynamic> goods_code = [];
+  // List<dynamic> goods_code = [];
 
-  Future getGoodsCode() async {
-    final connection = await sqlConnect;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final int? id = prefs.getInt('id_categories');
-    var results = await connection
-        .query('SELECT  code FROM goods WHERE  category_id = $id');
-    goods_code = results.map((e) => e.values!.first.toString()).toList();
-    // print(goods);
+  // Future getGoodsCode() async {
+  //   final connection = await sqlConnect;
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final int? id = prefs.getInt('id_categories');
+  //   var results = await connection
+  //       .query('SELECT  code FROM goods WHERE  category_id = $id');
+  //   goods_code = results.map((e) => e.values!.first.toString()).toList();
+  //   // print(goods);
 
-    return goods_code;
-  }
+  //   return goods_code;
+  // }
 
-  List<dynamic> goods_photo = [];
+  // List<dynamic> goods_photo = [];
 
-  Future getGoodsPhoto() async {
-    final connection = await sqlConnect;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final int? id = prefs.getInt('id_categories');
-    var results = await connection
-        .query('SELECT  photo FROM goods WHERE  category_id = $id');
-    goods_photo = results.map((e) => e.values!.first.toString()).toList();
-    // print(goods);
+  // Future getGoodsPhoto() async {
+  //   final connection = await sqlConnect;
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final int? id = prefs.getInt('id_categories');
+  //   var results = await connection
+  //       .query('SELECT  photo FROM goods WHERE  category_id = $id');
+  //   goods_photo = results.map((e) => e.values!.first.toString()).toList();
+  //   // print(goods);
 
-    return goods_photo;
-  }
+  //   return goods_photo;
+  // }
 }
