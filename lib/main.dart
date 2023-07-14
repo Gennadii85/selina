@@ -4,7 +4,7 @@ import 'home_page/my_home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
+  // await Hive.initFlutter();
 
   runApp(const MyApp());
 }

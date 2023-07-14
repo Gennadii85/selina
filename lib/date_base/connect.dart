@@ -2,6 +2,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:mysql1/mysql1.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../categories/categories_page.dart';
 
@@ -45,11 +46,12 @@ class MySql {
 
   Future getGoods() async {
     final connection = await sqlConnect;
-    var id = CategoriesPageState().id_categories;
-    print(id);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final int? id = prefs.getInt('id_categories');
     var results = await connection
         .query('SELECT price FROM goods WHERE  category_id = $id');
     goods = results.map((e) => e.values!.first.toString()).toList();
+    print(prefs.getInt('id_categories').toString());
 
     return goods;
   }

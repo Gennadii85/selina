@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../date_base/connect.dart';
 import '../home_page/drawer_home_page.dart';
 import '../sample/model_categories.dart';
@@ -22,11 +23,11 @@ class CategoriesPageState extends State<CategoriesPage> {
     super.initState();
   }
 
-  int id_categories = 124;
-  pushID(idd) {
-    id_categories = idd;
-    // print(id_categories);
-    return id_categories;
+  Future shared(idd) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('id_categories');
+    await prefs.setInt('id_categories', idd);
+    // return idd;
   }
 
   @override
@@ -34,7 +35,7 @@ class CategoriesPageState extends State<CategoriesPage> {
     return Scaffold(
       drawer: const DrawerAppBar(),
       appBar: AppBar(
-        title: Text(id_categories.toString()),
+        title: const Text('Selina'),
       ),
       body: FutureBuilder(
           future: date_categories.getCategoriesName(),
@@ -44,8 +45,6 @@ class CategoriesPageState extends State<CategoriesPage> {
             name = date_categories.categories_name;
             idd = date_categories.categories_id;
             if (snapshot.hasData) {
-              // print(id);
-              // print(name);
               return GridView.builder(
                 itemCount: name.length,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -59,8 +58,7 @@ class CategoriesPageState extends State<CategoriesPage> {
                   name: name[index].toString(),
                   id: idd[index],
                   coolbackCategories: (idd) {
-                    // print(idd);
-                    pushID(idd);
+                    shared(idd);
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const ModelCategories()));
                   },
